@@ -1,0 +1,44 @@
+{% extends "partials/base.html" %}
+{% load static %}
+
+
+{% block content %}
+
+
+
+<div class="container mt-5 mb-5">
+    <h2 class="text-center mb-4"> BOOK LIST </h2>
+    <div class="row">
+        {% for author in author_list %}
+
+
+        <div class="col-md-6">
+            <div class="card mb-3" style="max-width: 540px;">
+                <div class="row g-0 ">
+                    <div class="col-md-4 m-auto text-center">
+                        <img src="{% static 'img/author.png' %}" alt="book img" height="100" width="100">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ author }}</h5>
+                            <p class="card-text">
+                                {{ author.short_about_author }}
+                            </p>
+
+                            <p class="card-text">
+                                <a href="{% url 'author_detail' author.id %}" class="text-muted">Detail</a>
+                            </p>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        {% endfor %}
+
+    </div>
+
+    {% endblock content %}

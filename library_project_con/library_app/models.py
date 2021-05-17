@@ -23,7 +23,7 @@ class Book(models.Model):
     title = models.CharField(max_length=150)
     isbn = models.CharField(
         'ISBN', max_length=13, help_text='13 Character <a href="https://www.isbn-international.org/content/what-isbn">ISBN number</a>')
-    about = models.TextField(max_length=1000, blank=True, null=True)
+    about = models.TextField(max_length=1500, blank=True, null=True)
     number_of_page = models.SmallIntegerField()
     book_genre = models.ManyToManyField(
         Genre, help_text='Select a genre for this book')
@@ -83,6 +83,13 @@ class Author(models.Model):
     last_name = models.CharField(max_length=100)
     date_of_birth = models.DateField(blank=True, null=True)
     date_of_death = models.DateField(blank=True, null=True)
-
+    about = models.TextField(max_length=1500, blank=True, null=True)
+    added_date = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     def __str__(self):
         return f"{self.last_name}, {self.first_name}"
+
+    def short_about_author(self):
+        return self.about[:120] + "..."
+
+    class Meta:
+        ordering = ['-added_date']

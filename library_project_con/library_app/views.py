@@ -17,9 +17,18 @@ def index(request):
 
 class BookListView(ListView):
     model = Book
-    paginate_by = 21
+    paginate_by = 20
     template_name = 'book_list.html'
 
 def book_detail(request, id):
     book = Book.objects.get(id=id)
     return render(request, 'book_detail.html', {'book': book})
+
+class AuthorListView(ListView):
+    model = Author
+    paginate_by = 20
+    template_name='author_list.html'
+
+def author_detail(request, id):
+    author = Author.objects.get(id = id)
+    return render(request, 'author_detail.html', {'author': author})
