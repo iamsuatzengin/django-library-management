@@ -1,7 +1,22 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Book, Author, Genre
 from django.views.generic.list import ListView
+from django.db.models import Q
 # Create your views here.
+
+
+def search(request):
+    search_input = request.GET.get('search_input')
+    searched_book = Book.objects.filter(title__icontains=search_input)
+    searched_author = Author.objects.filter(
+        Q(first_name__icontains=search_input) | Q(last_name__icontains=search_input)
+    )
+    if searched_book:
+        return render(request, 'book_list.html', {'book_list': searched_book})
+    if searched_author:
+        return render(request, 'author_list.html', {'author_list':searched_author})
+
+
 
 def index(request):
     books = Book.objects.all()
