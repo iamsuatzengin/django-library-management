@@ -1,0 +1,82 @@
+{% extends "partials/base.html" %}
+{% load static %}
+
+
+{% block content %}
+
+<div class="container m-5 p-5">
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    Total number of books
+                </div>
+                <div class="card-body">
+                    {{ books.count }}
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    Total number of author
+                </div>
+                <div class="card-body">
+                    {{ authors.count }}
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    Total number of genre
+                </div>
+                <div class="card-body">
+                    {{ genres.count }}
+                </div>
+            </div>
+        </div>
+        <br>
+    </div>
+
+</div>
+
+<div class="container mb-5 pb-5">
+
+    <div class="row">
+        {% for book in books %}
+
+        {% if forloop.counter <= 6 %} 
+        <div class="col-md-4">
+            <div class="card mb-3" style="max-width: 540px;">
+                <div class="row g-0 ">
+                    <div class="col-md-4 m-auto text-center">
+                        <img src="{% static 'img/book.png' %}" alt="book img" height="100" width="100">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ book.title }}</h5>
+                            <p class="card-text">
+                                {{ book.short_about }}
+                            </p>
+
+                            <p class="card-text">
+                                <a href="#" class="text-muted">Detail</a>
+                            </p>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+    </div>
+    {% endif %}
+
+    {% endfor %}
+
+</div>
+</div>
+{% endblock content %}
