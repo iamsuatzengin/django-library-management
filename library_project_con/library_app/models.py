@@ -28,7 +28,7 @@ class Book(models.Model):
     book_genre = models.ManyToManyField(
         Genre, help_text='Select a genre for this book')
     book_language = models.ForeignKey(Language, on_delete=models.SET_NULL, null=True, blank=True)
-    # author
+    author = models.ForeignKey('Author', on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
         return self.title
@@ -37,6 +37,9 @@ class Book(models.Model):
     def short_about(self):
         return self.about[:50]
 
+    def display_genre(self):
+        return ', '.join(i.genre for i in self.book_genre.all()[:3])
+    display_genre.short_description = 'Genre'
 
 LOAN_STATUS = (
     ('m', 'Maintance'),
