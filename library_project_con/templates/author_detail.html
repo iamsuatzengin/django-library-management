@@ -29,8 +29,11 @@
                         </button>
                         <a href="{% url 'update_author' author.id %}" class="btn btn-outline-success btn-sm rounded-3">Update</a>
                     {% endif %}
-
-                    <img src="{% static 'img/author.png' %}" alt="" class="card-img">
+                    {% if author.author_image %}
+                      <img src="{{ author.author_image.url }}" alt="author" class="card-img mt-2">
+                    {% else %}
+                    <img src="{% static 'img/author.png' %}" alt="author" class="card-img">
+                    {% endif %}
                     <p class="card-text">
                         <strong>Books:</strong>
                         {% for book in author.book_set.all %}

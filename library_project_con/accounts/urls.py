@@ -12,4 +12,5 @@ urlpatterns = [
 
     path('profile/<str:username>', views.profile, name="profile"),
     path('favorite/<int:id>', views.favorite, name="favorite"),
+    path('update-profile/', views.update_profile, name="update_profile"),
 ]

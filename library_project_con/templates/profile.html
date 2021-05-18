@@ -12,8 +12,12 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-md-3">
-                            <img src="{% static 'img/author.png' %}" alt="xd" class="card-img">
-
+                            {% if profile.picture %}
+                            <img src=" {{ profile.picture.url }} " alt="profile" class="card-img mt-4 rounded-circle">
+                            {% else %}
+                              <img src="{% static 'img/author.png' %}" alt="profile" class="card-img">
+                            {% endif %}
+                            <a href="{% url 'update_profile' %}" class="card-text text-center"> Edit Profile</a>
                         </div>
                         <div class="col-md-9">
                             <h4 class="card-title text-center">{{ profile.user.username }}</h4>
@@ -42,7 +46,11 @@
                     <div class="card mb-3" style="max-width: 540px;">
                         <div class="row g-0 ">
                             <div class="col-md-4 m-auto text-center">
-                                <img src="{% static 'img/book.png' %}" alt="book img" height="100" width="100">
+                                {% if book.book_image %}
+                                    <img src="{{ book.book_image.url }}" alt="book" class="card-img mt-2 p-3">
+                                {% else %}
+                                    <img src="{% static 'img/book.png' %}" alt="book" class="card-img p-3">
+                                {% endif %}
                             </div>
                             <div class="col-md-8">
                                 <div class="card-body">

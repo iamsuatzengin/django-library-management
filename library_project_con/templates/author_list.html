@@ -16,7 +16,11 @@
             <div class="card mb-3" style="max-width: 540px;">
                 <div class="row g-0 ">
                     <div class="col-md-4 m-auto text-center">
-                        <img src="{% static 'img/author.png' %}" alt="book img" height="100" width="100">
+                        {% if author.author_image %}
+                      <img src="{{ author.author_image.url }}" alt="author" class="card-img mt-2 p-3">
+                    {% else %}
+                    <img src="{% static 'img/author.png' %}" alt="author" class="card-img p-3">
+                    {% endif %}
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">

@@ -30,6 +30,8 @@ class Book(models.Model):
     book_language = models.ForeignKey(Language, on_delete=models.SET_NULL, null=True, blank=True)
     author = models.ForeignKey('Author', on_delete=models.CASCADE, blank=True, null=True)
     added_date = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    book_image = models.ImageField(upload_to='books/', blank=True, null=True)
+
     def __str__(self):
         return self.title
 
@@ -99,6 +101,8 @@ class Author(models.Model):
     date_of_death = models.DateField(blank=True, null=True)
     about = models.TextField(max_length=1500, blank=True, null=True)
     added_date = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+
+    author_image = models.ImageField(upload_to = 'authors/', blank=True, null=True)
     def __str__(self):
         return f"{self.last_name}, {self.first_name}"
 

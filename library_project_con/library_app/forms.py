@@ -6,7 +6,7 @@ class BookForm(forms.ModelForm):
         model = Book
         fields = [
             'title', 'isbn', 'about', 'number_of_page',
-            'book_genre', 'book_language', 'author',
+            'book_genre', 'book_language', 'author', 'book_image',
         ]
 
 class AuthorForm(forms.ModelForm):
@@ -14,7 +14,7 @@ class AuthorForm(forms.ModelForm):
         model = Author
         fields = [
             'first_name', 'last_name',
-            'date_of_birth', 'date_of_death', 'about'
+            'date_of_birth', 'date_of_death', 'about', 'author_image'
         ]
 
 class BookCommentsForm(forms.ModelForm):

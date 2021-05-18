@@ -74,7 +74,7 @@ def author_detail(request, id):
 @login_required(login_url='login')
 @allowed_users(['librarian'])
 def add_book(request):
-    form = BookForm(request.POST or None)
+    form = BookForm(request.POST or None, request.FILES or None)
     if form.is_valid():
         form.save()
         return redirect('book_list')
@@ -93,7 +93,7 @@ def delete_book(request, id):
 @allowed_users(['librarian'])
 def update_book(request, id):
     book = get_object_or_404(Book, id=id)
-    form = BookForm(request.POST or None, instance=book)
+    form = BookForm(request.POST or None, request.FILES or None, instance=book)
 
     if form.is_valid():
         form.save()
@@ -104,7 +104,7 @@ def update_book(request, id):
 @login_required(login_url='login')
 @allowed_users(['librarian'])
 def add_author(request):
-    form = AuthorForm(request.POST or None)
+    form = AuthorForm(request.POST or None, request.FILES or None)
     if form.is_valid():
         form.save()
         return redirect('author_list')
@@ -123,7 +123,7 @@ def delete_author(request, id):
 @allowed_users(['librarian'])
 def update_author(request, id):
     author = get_object_or_404(Author, id=id)
-    form = AuthorForm(request.POST or None, instance=author)
+    form = AuthorForm(request.POST or None, request.FILES or None , instance=author)
     if form.is_valid():
         form.save()
         return HttpResponseRedirect(reverse('author_detail', args=[str(id)]))

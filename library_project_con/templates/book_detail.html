@@ -29,7 +29,11 @@
             <div class="card m-auto mt-4 mb-4" style="max-width: 540px;">
                 <div class="row g-0">
                     <div class="col-md-4">
-                        <img src="{% static 'img/author.png' %}" alt="profileimg" class="card-img p-2 img-thumbnail rounded-circle">
+                        {% if comment.user.profile.picture %}
+                            <img src=" {{ comment.user.profile.picture.url }} " alt="profile" class="card-img mt-4 p-1 rounded-circle">
+                        {% else %}
+                              <img src="{% static 'img/author.png' %}" alt="profile" class="card-img">
+                        {% endif %}
                     </div>
                     <div class="col-md-8">
                     <div class="card-body">
@@ -64,7 +68,12 @@
                         <a href="{% url 'update_book' book.id %}" class="btn btn-outline-success btn-sm rounded-3">Update</a>
                     {% endif %}
 
-                    <img src="{% static 'img/book.png' %}" alt="" class="card-img">
+                    {% if book.book_image %}
+                        <img src="{{ book.book_image.url }}" alt="book" class="card-img mt-2">
+                    {% else %}
+                        <img src="{% static 'img/book.png' %}" alt="book" class="card-img">
+                    {% endif %}
+
                     <p class="card-text">
                         <strong>Author: </strong> <a href="{% url 'author_detail' book.author.id %}"> {{book.author}}</a>
                     </p>
@@ -91,6 +100,7 @@
                         {% csrf_token %}
                         <input type="hidden" name="book_id" value="{{book.id}}">
 
+                    {% if request.user.is_authenticated %}
                         {% if request.user.profile not in book.favorites.all %}
                         <button type="submit" class="btn btn-outline-warning">
                             Add Favorite
@@ -100,6 +110,7 @@
                             Remove
                         </button>
                         {% endif %}
+                    {% endif %}
 
                     </form>
                 </div>

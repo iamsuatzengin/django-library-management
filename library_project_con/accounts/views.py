@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import SignupForm
+from .forms import SignupForm, UpdateProfileForm
 from django.contrib import messages
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
@@ -51,3 +51,14 @@ def favorite(request, id):
     else:
         book.favorites.add(profile)
     return HttpResponseRedirect(reverse('book_detail', args=[str(id)]))
+
+
+def update_profile(request):
+    user = request.user
+    profile = Profile.objects.get(user__id = user.id)
+    form = UpdateProfileForm(request.POST or None, request.FILES or None, instance=profile)
+
+    if form.is_valid():
+        form.save()
+        return redirect('index')
+    return render(request, 'update_profile.html', {'form': form})
