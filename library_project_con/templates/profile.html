@@ -1,0 +1,71 @@
+{% extends "partials/base.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="container mt-5 mb-5">
+    <div class="row">
+        <div class="col-md-2"></div>
+
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <img src="{% static 'img/author.png' %}" alt="xd" class="card-img">
+
+                        </div>
+                        <div class="col-md-9">
+                            <h4 class="card-title text-center">{{ profile.user.username }}</h4>
+
+                            {% if profile.first_name and profile.last_name %}
+                            <div class="card-text text-center"><strong>Name: </strong>
+                                {{ profile.first_name }} {{profile.last_name }}
+                            </div>
+                            {% endif %}
+                            <div class="card-text text-center"><strong>Favorites: </strong>
+                                <a href="#fav">{{ profile.favorites.all.count }}</a>
+                            </div>
+                            {% if profile.bio %}
+                            <div class="card-text text-center "><strong>Bio: </strong>
+                                {{ profile.bio }}
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body mb-5">
+                    <h5 class="card-title text-center pb-3" id="fav">Favorite Books</h5>
+                    {% for book in profile.favorites.all %}
+
+                    <div class="card mb-3" style="max-width: 540px;">
+                        <div class="row g-0 ">
+                            <div class="col-md-4 m-auto text-center">
+                                <img src="{% static 'img/book.png' %}" alt="book img" height="100" width="100">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title"> {{ book.title }} </h5>
+                                    <p class="card-text">
+                                        {{ book.short_about }}
+                                    </p>
+                                    <p class="card-text">
+                                        <a href="{% url 'book_detail' book.id %}" class="text-muted">Detail</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-md-2"></div>
+    </div>
+</div>
+
+
+{% endblock content %}

@@ -2,7 +2,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-
+from .models import Profile
 
 def forbiddenUsernames(value):
     forbidden_list = [
@@ -17,8 +17,6 @@ def invalidUsername(value):
 
 
 class SignupForm(UserCreationForm):
-    first_name = forms.CharField(max_length=50, widget=forms.TextInput())
-    last_name = forms.CharField(max_length=50, widget=forms.TextInput())
     username = forms.CharField(max_length=50, widget=forms.TextInput())
     email = forms.CharField(widget=forms.EmailInput())
     password1 = forms.CharField(max_length=50, widget=forms.PasswordInput())
@@ -28,8 +26,8 @@ class SignupForm(UserCreationForm):
         super(SignupForm, self).__init__(*args, **kwargs)
         self.fields['username'].validators.append(forbiddenUsernames)
         self.fields['username'].validators.append(invalidUsername)
-    
+
     class Meta:
         model = User
-        fields = ['first_name', 'last_name' ,'username', 'email', 'password1', 'password2']
+        fields = ['username', 'email', 'password1', 'password2']
 

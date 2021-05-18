@@ -24,7 +24,7 @@
                 <div class="card-body">
                     <img src="{% static 'img/book.png' %}" alt="" class="card-img">
                     <p class="card-text">
-                        <strong>Author: </strong>{{book.author}}
+                        <strong>Author: </strong> <a href="{% url 'author_detail' book.author.id %}"> {{book.author}}</a>
                     </p>
                     <p class="card-text">
                         <strong>Number of page: </strong>{{book.number_of_page}}
@@ -41,12 +41,29 @@
                     <p class="card-text">
                         <strong>Language: </strong>{{book.book_language}}
                     </p>
+                    <p class="card-text">
+                        <strong>Favorites: </strong>{{book.favorites.all.count}}
+                    </p>
+
+                    <form action="{% url 'favorite' book.id %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="book_id" value="{{book.id}}">
+
+                        {% if request.user.profile not in book.favorites.all %}
+                        <button type="submit" class="btn btn-outline-warning">
+                            Add Favorite
+                        </button>
+                        {% else %}
+                        <button type="submit" class="btn btn-outline-danger">
+                            Remove
+                        </button>
+                        {% endif %}
+
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-    
-
 </div>
 
 {% endblock content %}
