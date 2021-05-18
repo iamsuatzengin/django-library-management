@@ -1,8 +1,11 @@
-from django.shortcuts import render, redirect
-from .models import Book, Author, Genre
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import Book, Author, Genre, BookComments
 from django.views.generic.list import ListView
 from django.db.models import Q
 # Create your views here.
+from .forms import BookCommentsForm
+from django.urls import reverse
+from django.http import HttpResponseRedirect
 
 
 def search(request):
@@ -37,7 +40,22 @@ class BookListView(ListView):
 
 def book_detail(request, id):
     book = Book.objects.get(id=id)
-    return render(request, 'book_detail.html', {'book': book})
+    form = BookCommentsForm(request.POST or None)
+
+    if form.is_valid():
+        comment = form.save(commit=False)
+        comment.book = book
+        comment.user = request.user
+        comment.save()
+        return HttpResponseRedirect(reverse('book_detail', args=[str(id)]))
+
+    context = {
+        'book': book,
+        'form': form,
+    }
+    return render(request, 'book_detail.html', context)
+
+
 
 class AuthorListView(ListView):
     model = Author
@@ -47,3 +65,5 @@ class AuthorListView(ListView):
 def author_detail(request, id):
     author = Author.objects.get(id = id)
     return render(request, 'author_detail.html', {'author': author})
+
+

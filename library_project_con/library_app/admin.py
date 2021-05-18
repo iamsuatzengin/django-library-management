@@ -1,11 +1,11 @@
 from django.contrib import admin
-from .models import Book, BookBorrow, Author, Genre, Language
+from .models import Book, BookBorrow, Author, Genre, Language, BookComments
 # Register your models here.
 
 
 admin.site.register(Genre)
 admin.site.register(Language)
-
+admin.site.register(BookComments)
 
 class BookBorrowInline(admin.TabularInline):
     model = BookBorrow

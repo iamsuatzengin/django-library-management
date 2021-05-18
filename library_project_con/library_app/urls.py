@@ -10,4 +10,5 @@ urlpatterns = [
     path('author-detail/<int:id>', views.author_detail, name="author_detail"),
 
     path('search', views.search, name="search"),
+    
 ]

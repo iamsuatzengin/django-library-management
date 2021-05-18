@@ -52,6 +52,20 @@ LOAN_STATUS = (
 )
 
 
+class BookComments(models.Model):
+    book = models.ForeignKey(Book, related_name='comments', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='users_comment')
+    date = models.DateField(auto_now=True)
+    body = models.TextField(max_length=1000)
+
+    def __str__(self):
+        return self.user.username
+    
+    class Meta:
+        ordering = ['-date']
+
+
+
 class BookBorrow(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4,
                           help_text='Unique ID for this particular book across whole library')

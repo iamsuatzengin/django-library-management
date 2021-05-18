@@ -3,7 +3,7 @@
 
 
 {% block content %}
-  
+{% load crispy_forms_tags %}
 <br><br>
 <div class="container">
 
@@ -17,8 +17,44 @@
                     <h5 class="card-title">About</h5>
                     <p class="card-text">{{ book.about }}</p>
                 </div>
+                <div class="card-footer">
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form | crispy }}
+                        <button type="submit" class="btn btn-outline-success mt-2">Submit</button>
+                    </form>
+                </div>
               </div>
+        {% for comment in book.comments.all %}
+            <div class="card m-auto mt-4 mb-4" style="max-width: 540px;">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="{% static 'img/author.png' %}" alt="profileimg" class="card-img p-2 img-thumbnail rounded-circle">
+
+
+                    </div>
+                    <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <a href="{% url 'profile' comment.user.username %}">
+                                {{ comment.user.username }}
+                            </a>
+                        </h5>
+                        <p class="card-text">
+                            {{ comment.body }}
+                        </p>
+                        <p class="card-text">Comment date:
+                            <small class=" text-danger">{{ comment.date }}</small>
+                        </p>
+                    </div>
+                    </div>
+                </div>
+                </div>
+        {% endfor %}
         </div>
+
+
+
         <div class="col-md-3">
             <div class="card">
                 <div class="card-body">
