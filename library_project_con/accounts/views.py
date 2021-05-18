@@ -52,7 +52,7 @@ def favorite(request, id):
         book.favorites.add(profile)
     return HttpResponseRedirect(reverse('book_detail', args=[str(id)]))
 
-
+@login_required(login_url='login')
 def update_profile(request):
     user = request.user
     profile = Profile.objects.get(user__id = user.id)

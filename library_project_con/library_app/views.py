@@ -7,7 +7,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
 from .models import Book, Author, Genre, BookComments
-from .forms import BookCommentsForm, BookForm, AuthorForm
+from .forms import BookCommentsForm, BookForm, AuthorForm, GenreForm, LanguageForm
 from accounts.decorators import allowed_users
 
 
@@ -129,3 +129,22 @@ def update_author(request, id):
         return HttpResponseRedirect(reverse('author_detail', args=[str(id)]))
     return render(request, 'update_author.html', {'form': form})
 
+
+@login_required(login_url='login')
+@allowed_users(['librarian'])
+def add_genre(request):
+    form = GenreForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        return redirect('index')
+    return render(request, 'add_genre.html', {'form': form})
+
+
+@login_required(login_url='login')
+@allowed_users(['librarian'])
+def add_language(request):
+    form = LanguageForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        return redirect('index')
+    return render(request, 'add_language.html', {'form': form})

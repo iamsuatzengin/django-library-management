@@ -1,5 +1,6 @@
 from django import forms
-from .models import BookComments, Book, Author
+from .models import BookComments, Book, Author, Language, Genre
+from django.core.exceptions import ValidationError
 
 class BookForm(forms.ModelForm):
     class Meta:
@@ -25,3 +26,24 @@ class BookCommentsForm(forms.ModelForm):
     class Meta:
         model = BookComments
         fields = ['body']
+
+
+def unique_genre(value):
+    if Genre.objects.filter(genre__iexact=value).exists():
+        raise ValidationError('The named {} genre already exists!'.format(value))
+
+def unique_language(value):
+    if Language.objects.filter(language__iexact=value).exists():
+        raise ValidationError('This language already exists!')
+
+class GenreForm(forms.ModelForm):
+    genre = forms.CharField(widget=forms.TextInput(), validators=[unique_genre])
+    class Meta:
+        model = Genre
+        fields = ['genre']
+
+class LanguageForm(forms.ModelForm):
+    language = forms.CharField(widget=forms.TextInput(), validators=[unique_language])
+    class Meta:
+        model = Language
+        fields = ['language']

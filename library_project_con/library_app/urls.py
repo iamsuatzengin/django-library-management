@@ -19,4 +19,6 @@ urlpatterns = [
     path('delete-author/<int:id>', views.delete_author, name="delete_author"),
     path('update-author/<int:id>', views.update_author, name="update_author"),
 
+    path('add-genre/', views.add_genre, name="add_genre"),
+    path('add-language/', views.add_language, name="add_language"),
 ]
