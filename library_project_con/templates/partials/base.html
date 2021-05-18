@@ -44,6 +44,7 @@
                         </ul>
                     </li>
                 </ul>
+                {% if request.user.is_authenticated %}
                 <ul class="navbar-nav mb-2 mb-lg-0">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -52,15 +53,19 @@
                         </a>
                         <ul class="dropdown-menu me-5" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item" href="#">Profile</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li><a class="dropdown-item" href=" {% url 'change_password' %} ">Change your password</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="#">Log out</a></li>
+                            <li><a class="dropdown-item" href=" {% url 'logout' %} ">Log out</a></li>
                         </ul>
                     </li>
                 </ul>
-
+                {% else %}
+                <a class="nav-link"  href="{% url 'login' %}">Login</a>
+                <a class="nav-link"  href="{% url 'signup' %}">Sign Up</a>
+                {% endif %}
+    
                 <form class="d-flex" method="GET" action="{%  url 'search' %}">
 
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search_input">
